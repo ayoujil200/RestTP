@@ -34,7 +34,7 @@ public class UserControllerTest {
 
 	@Test
 	@Order(1)
-	public void testCreate() throws Exception {
+	public void shouldCreateUser() throws Exception {
 		User user = new User(200L, "f1", "l1", "e1@gmail.com");
 		when(userService.createOne(any(User.class))).thenReturn(user);
 		mockMvc.perform(MockMvcRequestBuilders.post("/users").content(asJsonString(user))
@@ -48,7 +48,7 @@ public class UserControllerTest {
 
 	@Test
 	@Order(2)
-	public void testDelete() throws Exception {
+	public void shouldDeleteUser() throws Exception {
 		User user = new User(200L, "f1", "l1", "e1@gmail.com");
 		// when(userService.deleteOne(any(Long.class))).thenReturn(true);
 		mockMvc.perform(MockMvcRequestBuilders.delete("/users/" + user.getId()).contentType(MediaType.APPLICATION_JSON)
@@ -57,7 +57,7 @@ public class UserControllerTest {
 
 	@Test
 	@Order(5)
-	public void testUpdate() throws Exception {
+	public void shouldUpdateUser() throws Exception {
 		User user = new User(200L, "f1", "l1", "e1@gmail.com");
 		// when(userService.updateOne(any(User.class))).thenReturn(true);
 		mockMvc.perform(MockMvcRequestBuilders.put("/users").content(asJsonString(user))
@@ -67,7 +67,7 @@ public class UserControllerTest {
 
 	@Test
 	@Order(4)
-	public void testGetOne() throws Exception {
+	public void shouldReturnOneUser() throws Exception {
 		User user = new User(200L, "f1", "l1", "e1@gmail.com");
 		when(userService.getOne(any(long.class))).thenReturn(user);
 		mockMvc.perform(MockMvcRequestBuilders.get("/users/" + user.getId()).content(asJsonString(user))
@@ -81,7 +81,7 @@ public class UserControllerTest {
 
 	@Test
 	@Order(3)
-	public void testGetAll() throws Exception {
+	public void shouldReturnListOfUsers() throws Exception {
 		when(userService.getAll()).thenReturn(List.of(new User(null, "f3", "l3", "e3@gmail.com")));
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/users")).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(1))

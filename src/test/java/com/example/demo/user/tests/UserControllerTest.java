@@ -46,7 +46,7 @@ public class UserControllerTest {
 	@Order(2)
 	public void shouldDeleteUser() throws Exception {
 		User user = new User(200L, "f1", "l1", "e1@gmail.com");
-		// when(userService.deleteOne(any(Long.class))).thenReturn(true);
+		when(userService.deleteOne(any(Long.class))).thenReturn(true);
 		mockMvc.perform(MockMvcRequestBuilders.delete("/users/" + user.getId()).contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
 	}
@@ -55,7 +55,7 @@ public class UserControllerTest {
 	@Order(5)
 	public void shouldUpdateUser() throws Exception {
 		User user = new User(200L, "f1", "l1", "e1@gmail.com");
-		// when(userService.updateOne(any(User.class))).thenReturn(true);
+		when(userService.updateOne(any(User.class))).thenReturn(true);
 		mockMvc.perform(MockMvcRequestBuilders.put("/users").content(asJsonString(user))
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andDo(print())
 				.andExpect(status().isOk());

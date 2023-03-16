@@ -28,7 +28,7 @@ public class UserControllerTest {
 	@MockBean
 	private UserImpl userService;
 
-	private final User user = new User(200L, "f1", "l1", "e1@gmail.com");
+	private final User user = new User(200L, "firstname1", "lastname1", "email1@gmail.com");
 
 	@Test
 	public void contextLoads() throws Exception {

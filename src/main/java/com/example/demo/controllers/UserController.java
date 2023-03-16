@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entities.User;
+import com.example.demo.exceptions.UserNotFound;
 import com.example.demo.services.UserImpl;
 
 @RestController
@@ -25,21 +26,25 @@ public class UserController {
 	private UserImpl userService;
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<User> getOne(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<User> getOne(@PathVariable(value = "id") Long id) throws UserNotFound {
 		User user = userService.getOne(id);
 		return new ResponseEntity<>(user, HttpStatus.FOUND);
 	}
 
 	@GetMapping
-	public List<User> getAll() {
-		return userService.getAll();
+	public ResponseEntity<List<User>> getAll() {
+		try {
+			return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<?> deleteOneById(@PathVariable(value = "id") Long id) {
 		try {
 			userService.deleteOne(id);
-			return ResponseEntity.noContent().build();
+			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		} catch (EmptyResultDataAccessException e) {
 			return ResponseEntity.notFound().build();
 		}

@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.demo.entities.User;
+import com.example.demo.exceptions.UserNotFound;
 import com.example.demo.repositories.UserRepository;
 
 @Service
@@ -14,7 +15,8 @@ public class UserImpl implements GlobalService<User> {
 
 	@Override
 	public User getOne(Long id) {
-		return userRepository.findById(id).get();
+		User user = userRepository.findById(id).orElseThrow(() -> new UserNotFound("user not found!"));
+		return user;
 	}
 
 	@Override
